@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <button class="popup-button" id="popupButton"></button>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <div class="chat">
+                <div class="chat-title">
+                    <div>
+                        <h1>Чат-бот</h1>
+                        <figure class="avatar">
+                            <img src="images/popup_img.png" />
+                        </figure>
+                    </div>
+                    <span class="close" id="closePopup">&times;</span>
+                </div>
+                <div class="messages">
+                    <div class="messages-content"></div>
+                </div>
+                <div class="message-box">
+                    <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+                    <button type="submit" class="message-submit">Send</button>
+                </div>
+            </div>
+            <div class="bg"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="javaScript/main.js"></script>
+</body>
+</html>
