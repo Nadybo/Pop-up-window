@@ -46,7 +46,7 @@ body {
 .chat {
     position: absolute;
     top: 65%;
-    left: 70%;
+    left: 90%;
     transform: translate(-50%, -50%);
     width: 300px;
     height: 80vh;
@@ -62,7 +62,6 @@ body {
 }
 
 /* Chat Title */
-
 .chat-title {
     display: flex;
     align-items: center;
@@ -264,7 +263,6 @@ body {
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
     padding: 10px;
-    position: relative;
 }
 
 .message-box .message-input {
@@ -291,7 +289,7 @@ body {
     right: 10px;
     color: #fff;
     border: none;
-    background: #248A52;
+    background: fixed;
     font-size: 10px;
     text-transform: uppercase;
     line-height: 1;
@@ -301,10 +299,12 @@ body {
     transition: background .2s ease;
 }
 
-.message-box .message-submit:hover {
+.message-box:hover {
     background: #232442;
 }
-
+.submit-icon-button{
+    cursor: pointer;
+}
 /*Scrollbar*/
 .mCSB_scrollTools {
     margin: 1px -3px 1px 0;
@@ -337,7 +337,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 1;
 }
 
 .popup-content {
@@ -356,7 +356,7 @@ body {
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: rgb(255, 0, 0);
     text-decoration: none;
     cursor: pointer;
 }
