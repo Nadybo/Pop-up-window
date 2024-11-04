@@ -1,22 +1,32 @@
-// Открытие и закрытие поп-апа
 const popupButton = document.getElementById("popupButton");
 const popup = document.getElementById("popup");
 const closePopup = document.getElementById("closePopup");
+const overlay = document.createElement('div');
 
-popupButton.addEventListener("click", () => {
+overlay.classList.add('overlay'); 
+document.body.appendChild(overlay);
+
+function openPopup() {
     popup.style.display = "block";
-});
+    overlay.style.display = "block";
+}
 
-closePopup.addEventListener("click", () => {
+function closePopupFunc() {
     popup.style.display = "none";
-});
+    overlay.style.display = "none";
+}
+
+popupButton.addEventListener("click", openPopup);
+
+closePopup.addEventListener("click", closePopupFunc);
+
+overlay.addEventListener("click", closePopupFunc);
 
 window.addEventListener("click", (event) => {
-    if (event.target === popup) {
-        popup.style.display = "none";
+    if (event.target === overlay) {
+        closePopupFunc();
     }
 });
-
 // Элементы чата
 const messagesContent = document.querySelector('.messages-content');
 const messageInput = document.querySelector('.message-input');
@@ -50,7 +60,7 @@ function insertMessage() {
     messageElement.innerText = msg;
     messagesContent.appendChild(messageElement);
     setDate(messageElement);
-    messageInput.value = ''; // Очистка поля ввода
+    messageInput.value = '';
     updateScrollbar();
 
     console.log("User message sent:", msg);
@@ -64,7 +74,7 @@ function fakeMessage() {
 
     const loadingMessage = document.createElement('div');
     loadingMessage.classList.add('message', 'loading', 'new');
-    loadingMessage.innerHTML = '<figure class="avatar"><img src="popup_img.png" /></figure><span></span>';
+    loadingMessage.innerHTML = '<span></span>';
     messagesContent.appendChild(loadingMessage);
     updateScrollbar();
 
@@ -73,7 +83,7 @@ function fakeMessage() {
 
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', 'new');
-        messageElement.innerHTML = `<figure class="avatar"><img src="popup_img.png" /></figure>${fakeMessages[fakeIndex]}`;
+        messageElement.innerHTML = `${fakeMessages[fakeIndex]}`;
         messagesContent.appendChild(messageElement);
         setDate(messageElement);
         updateScrollbar();
@@ -82,6 +92,7 @@ function fakeMessage() {
         fakeIndex = (fakeIndex + 1) % fakeMessages.length;
     }, 1000 + Math.random() * 2000);
 }
+
 
 // Обработчики событий для отправки сообщений
 messageSubmit.addEventListener('click', insertMessage);

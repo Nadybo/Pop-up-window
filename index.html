@@ -7,28 +7,25 @@
     <title>Document</title>
 </head>
 <body>
-    <button class="popup-button" id="popupButton"></button>
+    <img class="popup-button" id="popupButton" src="images/popup_img.png" alt="">
     <div class="popup" id="popup">
-        <div class="popup-content">
-            <div class="chat">
-                <div class="chat-title">
-                    <div>
-                        <h1>Чат-бот</h1>
-                        <figure class="avatar">
-                            <img src="images/popup_img.png" />
-                        </figure>
-                    </div>
-                    <span class="close" id="closePopup">&times;</span>
-                </div>
-                <div class="messages">
-                    <div class="messages-content"></div>
-                </div>
-                <div class="message-box">
-                    <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-                    <button type="submit" class="message-submit"><img class="submit-icon-button" src="icons/send-svgrepo-com.svg" alt="Иконка" width="20" height="20"></button>
-                </div>
+        <div class="chat-title">
+            <div class="chat-title-components">
+                <img class="avatar" src="images/popup_img.png" />
+                <h1>Чат-бот</h1>
             </div>
-            <div class="bg"></div>
+            <span class="close" id="closePopup">&times;</span>
+        </div>
+        <div class="chat">
+            <div class="messages">
+                <div class="messages-content"></div>
+            </div>
+        </div>
+        <div class="message-container">
+            <div class="message-box">
+                <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+                <button type="submit" class="message-submit" class="submit-icon-button" alt="Иконка">➤</button>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="javaScript/main.js"></script>
