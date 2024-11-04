@@ -17,9 +17,7 @@ function closePopupFunc() {
 }
 
 popupButton.addEventListener("click", openPopup);
-
 closePopup.addEventListener("click", closePopupFunc);
-
 overlay.addEventListener("click", closePopupFunc);
 
 window.addEventListener("click", (event) => {
@@ -27,19 +25,18 @@ window.addEventListener("click", (event) => {
         closePopupFunc();
     }
 });
+
 // Элементы чата
 const messagesContent = document.querySelector('.messages-content');
 const messageInput = document.querySelector('.message-input');
 const messageSubmit = document.querySelector('.message-submit');
-const fakeMessages = ['Hi', 'Bye', ':)'];
-let fakeIndex = 0;
+const loadingMessageText = 'Загрузка...';
 
-// Прокрутка до последнего сообщения
 function updateScrollbar() {
     messagesContent.scrollTop = messagesContent.scrollHeight;
 }
 
-// Установка временной метки для сообщения
+//временной метки для сообщения
 function setDate(messageElement) {
     const d = new Date();
     const hours = d.getHours();
@@ -50,7 +47,7 @@ function setDate(messageElement) {
     messageElement.appendChild(timestamp);
 }
 
-// Отправка пользовательского сообщения
+// User messages
 function insertMessage() {
     const msg = messageInput.value.trim();
     if (!msg) return;
@@ -64,37 +61,47 @@ function insertMessage() {
     updateScrollbar();
 
     console.log("User message sent:", msg);
-
-    setTimeout(fakeMessage, 1000 + Math.random() * 2000);
+    sendPostRequest(msg);
 }
 
-// Отправка сообщения от бота
-function fakeMessage() {
-    if (messageInput.value) return;
+//bot messages
+function displayBotResponse(responseText) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', 'new');
+    messageElement.innerHTML = responseText;
+    messagesContent.appendChild(messageElement);
+    setDate(messageElement);
+    updateScrollbar();
+
+    console.log("Bot message received:", responseText);
+}
+
+//POST-запрос
+function sendPostRequest(userMessage) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://92.63.192.119:8080");
+    xhr.setRequestHeader("Content-Type", "application/json");
 
     const loadingMessage = document.createElement('div');
     loadingMessage.classList.add('message', 'loading', 'new');
-    loadingMessage.innerHTML = '<span></span>';
+    loadingMessage.innerHTML = loadingMessageText;
     messagesContent.appendChild(loadingMessage);
     updateScrollbar();
 
-    setTimeout(() => {
-        loadingMessage.remove();
-
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', 'new');
-        messageElement.innerHTML = `${fakeMessages[fakeIndex]}`;
-        messagesContent.appendChild(messageElement);
-        setDate(messageElement);
-        updateScrollbar();
-
-        console.log("Bot message sent:", fakeMessages[fakeIndex]);
-        fakeIndex = (fakeIndex + 1) % fakeMessages.length;
-    }, 1000 + Math.random() * 2000);
+    const data = JSON.stringify({ message: userMessage });
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            loadingMessage.remove();
+            const response = JSON.parse(xhr.responseText);
+            displayBotResponse(response.reply);
+        } else {
+            loadingMessage.remove();
+            displayBotResponse("Ошибка сервера, попробуйте позже.");
+        }
+    };
+    xhr.send(data);
 }
 
-
-// Обработчики событий для отправки сообщений
 messageSubmit.addEventListener('click', insertMessage);
 messageInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -103,8 +110,6 @@ messageInput.addEventListener('keydown', (e) => {
     }
 });
 
-// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
     updateScrollbar();
-    setTimeout(fakeMessage, 100);
 });
