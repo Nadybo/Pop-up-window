@@ -79,28 +79,50 @@ function displayBotResponse(responseText) {
 //POST-запрос
 function sendPostRequest(userMessage) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://92.63.192.119:8080");
+    xhr.open("POST", "http://92.63.192.119:8080/predict");
+    xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
 
+    const loadingMessageText = "Загрузка...";  // Проверьте, что переменная определена
     const loadingMessage = document.createElement('div');
     loadingMessage.classList.add('message', 'loading', 'new');
     loadingMessage.innerHTML = loadingMessageText;
     messagesContent.appendChild(loadingMessage);
     updateScrollbar();
 
-    const data = JSON.stringify({ message: userMessage });
+    const data = JSON.stringify({"question": userMessage});
+    
     xhr.onload = function() {
         if (xhr.status === 200) {
             loadingMessage.remove();
-            const response = JSON.parse(xhr.responseText);
-            displayBotResponse(response.reply);
+            try {
+                const response = JSON.parse(xhr.responseText);
+                console.log("Parsed response:", response); // Проверка структуры ответа
+                
+                // Временно отображаем полный ответ
+                displayBotResponse(JSON.stringify(response));
+                
+            } catch (e) {
+                console.error("Ошибка парсинга JSON:", e);
+                displayBotResponse("Ошибка в формате ответа сервера.");
+            }
         } else {
             loadingMessage.remove();
             displayBotResponse("Ошибка сервера, попробуйте позже.");
         }
     };
+    
+    
+    
+    xhr.onerror = function() {
+        loadingMessage.remove();
+        displayBotResponse("Ошибка сети, попробуйте позже.");
+    };
+
     xhr.send(data);
 }
+
+
 
 messageSubmit.addEventListener('click', insertMessage);
 messageInput.addEventListener('keydown', (e) => {
