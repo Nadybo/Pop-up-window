@@ -73,7 +73,7 @@ function displayBotResponse(responseText) {
     setDate(messageElement);
     updateScrollbar();
 
-    console.log("Bot message received:", responseText);
+    // console.log("Bot message received:", responseText);
 }
 
 //POST-запрос
@@ -83,7 +83,7 @@ function sendPostRequest(userMessage) {
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
 
-    const loadingMessageText = "Загрузка...";  // Проверьте, что переменная определена
+    const loadingMessageText = "Загрузка...";
     const loadingMessage = document.createElement('div');
     loadingMessage.classList.add('message', 'loading', 'new');
     loadingMessage.innerHTML = loadingMessageText;
@@ -96,12 +96,23 @@ function sendPostRequest(userMessage) {
         if (xhr.status === 200) {
             loadingMessage.remove();
             try {
-                const response = JSON.parse(xhr.responseText);
-                console.log("Parsed response:", response); // Проверка структуры ответа
-                
-                // Временно отображаем полный ответ
-                displayBotResponse(JSON.stringify(response));
-                
+                const response = JSON.parse(xhr.responseText); 
+                // console.log("Parsed response:", response); 
+        
+                Object.keys(response).forEach(key => {
+                    const data = response[key];
+                    
+                    delete data.uid;
+    
+                    if (data && data.url && data.description) {
+                        const combinedContent = `${data.description} <br> <a class="link-json" href="${data.url}" target="_blank">${data.url}</a>`;
+                    
+                        displayBotResponse(combinedContent);
+                    }
+                     else {
+                        displayBotResponse("Поле url или description отсутствует в ответе.");
+                    }
+                });
             } catch (e) {
                 console.error("Ошибка парсинга JSON:", e);
                 displayBotResponse("Ошибка в формате ответа сервера.");
@@ -113,7 +124,6 @@ function sendPostRequest(userMessage) {
     };
     
     
-    
     xhr.onerror = function() {
         loadingMessage.remove();
         displayBotResponse("Ошибка сети, попробуйте позже.");
@@ -121,8 +131,6 @@ function sendPostRequest(userMessage) {
 
     xhr.send(data);
 }
-
-
 
 messageSubmit.addEventListener('click', insertMessage);
 messageInput.addEventListener('keydown', (e) => {

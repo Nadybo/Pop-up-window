@@ -143,7 +143,7 @@ body {
 }
 
 .message .timestamp {
-    bottom: -15px;
+
     font-size: .8rem;
     color: rgba(255, 255, 255, 0.493);
 }
@@ -293,4 +293,8 @@ body {
 
 .message-submit:hover {
     background-color: #7e22ce;
+}
+
+.link-json{
+    color: rgb(0, 224, 19);
 }
