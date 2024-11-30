@@ -79,7 +79,7 @@ function displayBotResponse(responseText) {
 //POST-запрос
 function sendPostRequest(userMessage) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://92.63.192.119:8080/predict");
+    xhr.open("POST", "https://widget.su");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
 

@@ -21,7 +21,7 @@ body {
 }
 
 .popup-button {
-    height: 50px;
+    height: 60px;
     aspect-ratio: 1;
     position: fixed;
     bottom: 80px;
@@ -44,8 +44,8 @@ body {
     position: fixed;
     bottom: 80px;
     right: 110px;
-    width: 300px;
-    height: 480px;
+    width: 400px;
+    height: 600px;
     background: #5F5F68;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -79,7 +79,7 @@ body {
     background-color: #232442;
     padding: 10px;
     width: 100%;
-    height: 50px;
+    height: 80px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -97,7 +97,7 @@ body {
     font-size: 10pt;
 }
 .avatar{
-    width: 35px;
+    width: 50px;
     aspect-ratio: 1;
 }
 .close {
@@ -120,7 +120,7 @@ body {
     color: rgb(255, 255, 255);
     overflow: hidden;
     width: 100%;
-    padding: 5px;
+    padding: 15px;
 }
 
 .messages .messages-content {
@@ -137,8 +137,9 @@ body {
     border-radius: 10px 10px 10px 0;
     background: rgba(0, 0, 0, .3);
     margin: 8px 0;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.2rem;
-    line-height: 1.4;
+    line-height: 1.7;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
 
